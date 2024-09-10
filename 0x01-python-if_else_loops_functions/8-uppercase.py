@@ -5,6 +5,7 @@ def to_uper(i):
     else:
         return ord(i)
 
+
 def uppercase(str):
     j = ""
     for i in str:
