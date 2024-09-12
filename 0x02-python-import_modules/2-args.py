@@ -10,4 +10,4 @@ if __name__ == "__main__":
         else:
             print("{:d} arguments:".format(SUM - 1))
         for x in range(1, SUM):
-            print("{:d}: {}".format(i, sys.argv[x]))
+            print("{:d}: {}".format(x, sys.argv[x]))
