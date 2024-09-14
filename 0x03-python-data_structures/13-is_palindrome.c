@@ -52,7 +52,7 @@ int is_palindrome(listint_t **head)
 	if ((size % 2) == 0 && tmp->x != tmp->task->x)
 		return (0);
 
-	tmp = tmp->next->task;
+	tmp = tmp->task->task;
 	rev = reverse_listint(&tmp);
 	mid = rev;
 
