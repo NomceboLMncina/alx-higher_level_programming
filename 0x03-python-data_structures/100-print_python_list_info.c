@@ -10,7 +10,7 @@
  */
 void print_python_list_info(PyObject *p)
 {
-	int size, alloc, x:
+	int size, alloc, x;
 	PyObject *obj;
 
 	size = Py_SIZE(p);
