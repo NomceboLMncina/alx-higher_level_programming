@@ -75,5 +75,5 @@ class SinglyLinkedList:
         return '\n'.join(values)
 
     def __repr__(self) -> str:
-        """Define the official string representation of the SinglyLinkedList."""
+        """Define official string representation of the SinglyLinkedList."""
         return f"SinglyLinkedList([{', '.join(map(str, self))}])"
