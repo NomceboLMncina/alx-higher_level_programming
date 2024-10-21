@@ -10,6 +10,7 @@ import json
 from models import base
 Base = base.Base
 
+
 class TestBaseDocs(unittest.TestCase):
     """Tests to check the documentation and style of Base class"""
     @classmethod
@@ -43,6 +44,7 @@ class TestBaseDocs(unittest.TestCase):
         """Tests for the presence of docstrings in all functions"""
         for func in self.base_funcs:
             self.assertTrue(len(func[1].__doc__) >= 1)
+
 
 class TestBase(unittest.TestCase):
     """Tests to check functionality of Base class"""
@@ -114,5 +116,5 @@ class TestBase(unittest.TestCase):
         self.assertEqual([], Base.from_json_string(""))
 
     def test_fjs_None(self):
-        """Tests from_json_string with None"""
+        """Tests from_json_string with an empty string"""
         self.assertEqual([], Base.from_json_string(None))
