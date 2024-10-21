@@ -14,6 +14,7 @@ from models.base import Base
 
 class TestRectangleDocs(unittest.TestCase):
     """Tests the Rectangle class' style and documentation"""
+    
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -28,7 +29,7 @@ class TestRectangleDocs(unittest.TestCase):
 
     def test_module_docstring(self):
         """Tests for the presence of a module docstring"""
-        self.assertTrue(len(Rectangle.__module__) >= 1)
+        self.assertTrue(len(Rectangle.__doc__) >= 1)
 
     def test_class_docstring(self):
         """Tests for the presence of a class docstring"""
@@ -42,6 +43,7 @@ class TestRectangleDocs(unittest.TestCase):
 
 class TestRectangle(unittest.TestCase):
     """Test the functionality of the Rectangle class"""
+    
     @classmethod
     def setUpClass(cls):
         """Set up for the tests"""
@@ -144,12 +146,12 @@ class TestRectangle(unittest.TestCase):
             r = Rectangle(1, 1, -1)
 
     def test_y_valueerror(self):
-        """Test ints <= 0 for y"""
+        """Test ints < 0 for y"""
         with self.assertRaisesRegex(ValueError, "y must be >= 0"):
             r = Rectangle(1, 1, 1, -1)
 
     def test_area(self):
-        """Test area calculation"""
+        """Test area"""
         self.assertEqual(self.r1.area(), 100)
         self.assertEqual(self.r2.area(), 6)
         self.assertEqual(self.r3.area(), 30)
@@ -208,9 +210,54 @@ class TestRectangle(unittest.TestCase):
         r = Rectangle(1, 1, 0, 0, 1)
         self.assertEqual(str(r), "[Rectangle] (1) 0/0 - 1/1")
         r.update(2, 3, 4, 5, 6)
-        self.assertEqual(str(r), "[Rectangle] (2) 4/5 - 3/6")
-        r.update(7)
-        self.assertEqual(str(r), "[Rectangle] (7) 4/5 - 3/6")
+        self.assertEqual(str(r), "[Rectangle] (2) 5/6 - 3/4")
+
+    def test_update_kwargs(self):
+        """Testing the update method with **kwargs"""
+        r = Rectangle(1, 1, 0, 0, 1)
+        self.assertEqual(str(r), "[Rectangle] (1) 0/0 - 1/1")
+        r.update(width=4, height=5, x=6, y=7, id=2)
+        self.assertEqual(str(r), "[Rectangle] (2) 6/7 - 4/5")
 
     def test_to_dictionary(self):
-        """Test"""
+        """Test the to_dictionary method"""
+        expected_dict = {'id': 1, 'width': 10, 'height': 10, 'x': 0, 'y': 0}
+        self.assertEqual(self.r1.to_dictionary(), expected_dict)
+
+        expected_dict = {'id': 2, 'width': 2, 'height': 3, 'x': 4, 'y': 0}
+        self.assertEqual(self.r2.to_dictionary(), expected_dict)
+
+    def test_to_dictionary_with_args(self):
+        """Test that to_dictionary() does not accept args"""
+        with self.assertRaises(TypeError):
+            self.r1.to_dictionary(1)
+
+    def test_update_with_invalid_args(self):
+        """Test update with invalid args"""
+        r = Rectangle(1, 1, 0, 0, 1)
+        with self.assertRaises(TypeError):
+            r.update("hello", 3, 4)
+
+    def test_update_with_too_few_args(self):
+        """Test update with too few args"""
+        r = Rectangle(1, 1, 0, 0, 1)
+        r.update(2)
+        self.assertEqual(str(r), "[Rectangle] (2) 0/0 - 1/1")  # only id updated
+
+    def test_update_with_invalid_kwargs(self):
+        """Test update with invalid kwargs"""
+        r = Rectangle(1, 1, 0, 0, 1)
+        with self.assertRaises(TypeError):
+            r.update(nonexistent_arg=5)
+
+    @classmethod
+    def tearDownClass(cls):
+        """Clean up after tests"""
+        del cls.r1
+        del cls.r2
+        del cls.r3
+        del cls.r4
+
+
+if __name__ == '__main__':
+    unittest.main()
