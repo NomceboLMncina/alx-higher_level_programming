@@ -9,7 +9,7 @@ class Rectangle(Base):
     '''
         Defining the Rectangle class
         Inherits from:
-        Base
+            Base
     '''
 
     def __init__(self, width, height, x=0, y=0, id=None):
@@ -91,7 +91,7 @@ class Rectangle(Base):
         '''
         rectangle = ""
         print("\n" * self.y, end="")
-        for m in range(self.height):
+        for i in range(self.height):
             rectangle += (" " * self.x) + ("#" * self.width) + "\n"
         print(rectangle, end="")
 
@@ -137,4 +137,4 @@ class Rectangle(Base):
             Overwritting the str method
         '''
         return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.x, self.y,
-                                                       self.width, self.height)
+        self.width, self.height)
