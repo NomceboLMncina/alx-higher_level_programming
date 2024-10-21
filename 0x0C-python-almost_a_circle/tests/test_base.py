@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains tests for Base class
+Contains tests for Base class functionality and documentation.
 """
 
 import unittest
@@ -8,11 +8,13 @@ import inspect
 import pep8
 import json
 from models import base
+
 Base = base.Base
 
 
 class TestBaseDocs(unittest.TestCase):
     """Tests to check the documentation and style of Base class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -49,7 +51,7 @@ class TestBaseDocs(unittest.TestCase):
 class TestBase(unittest.TestCase):
     """Tests to check functionality of Base class"""
     def test_too_many_args(self):
-        """test too many args to init"""
+        """Test too many args to init"""
         with self.assertRaises(TypeError):
             b = Base(1, 1)
 
@@ -93,6 +95,7 @@ class TestBase(unittest.TestCase):
         self.assertEqual(json_s, "[]")
 
     def test_None_to_json_String(self):
+        """Test for passing None to to_json_string"""
         json_s = Base.to_json_string(None)
         self.assertTrue(type(json_s) is str)
         self.assertEqual(json_s, "[]")
@@ -116,5 +119,45 @@ class TestBase(unittest.TestCase):
         self.assertEqual([], Base.from_json_string(""))
 
     def test_fjs_None(self):
-        """Tests from_json_string with an empty string"""
+        """Tests from_json_string with None"""
         self.assertEqual([], Base.from_json_string(None))
+
+    def test_save_to_file(self):
+        """Tests save_to_file with valid objects"""
+        b1 = Base(1)
+        b2 = Base(2)
+        Base.save_to_file([b1, b2])
+
+        with open('Base.json', 'r') as file:
+            content = file.read()
+            self.assertTrue(len(content) > 0)
+
+    def test_load_from_file(self):
+        """Tests load_from_file to ensure it reads correctly"""
+        b1 = Base(1)
+        b2 = Base(2)
+        Base.save_to_file([b1, b2])
+        objects = Base.load_from_file()
+        self.assertEqual(len(objects), 2)
+
+    def test_save_to_file_csv(self):
+        """Tests save_to_file_csv with valid objects"""
+        b1 = Base(1)
+        b2 = Base(2)
+        Base.save_to_file_csv([b1, b2])
+
+        with open('Base.csv', 'r') as file:
+            content = file.read()
+            self.assertTrue(len(content) > 0)
+
+    def test_load_from_file_csv(self):
+        """Tests load_from_file_csv to ensure it reads correctly"""
+        b1 = Base(1)
+        b2 = Base(2)
+        Base.save_to_file_csv([b1, b2])
+        objects = Base.load_from_file_csv()
+        self.assertEqual(len(objects), 2)
+
+
+if __name__ == '__main__':
+    unittest.main()
