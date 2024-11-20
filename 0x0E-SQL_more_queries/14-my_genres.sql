@@ -2,7 +2,7 @@
 -- Records are ordered by ascending genre name.
 SELECT z.`name`
   FROM `tv_genres` AS z
-       INNER JOIN `tv_show_genres` AS s
+       INNER JOIN `tv_show_genres` AS y
        ON z.`id` = y.`genre_id`
 
        INNER JOIN `tv_shows` AS r
